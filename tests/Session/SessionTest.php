@@ -29,7 +29,21 @@ class SessionTest extends TestCase
         $session->start();
         $request->setSession($session);
 
+        $this->assertNotNull($session->getId());
         $this->assertTrue($session->isStarted());
         $this->assertTrue($request->hasSession());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testSetSessionItems()
+    {
+        $request = Request::create('/', 'GET');
+        $session = new Session();
+        $session->start();
+        $session->set('url', $request->getUri());
+
+        $this->assertEquals($request->getUri(), $session->get('url'));
     }
 }

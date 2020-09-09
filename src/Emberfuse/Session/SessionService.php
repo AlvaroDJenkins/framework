@@ -16,8 +16,12 @@ class SessionService extends AbstractService implements ServiceInterface
      */
     public function register(): void
     {
-        $this->app->singleton(SessionInterface::class, function ($app) {
+        $session = new Session();
+
+        $this->app->singleton('session', function ($app) use ($session) {
             return new Session();
         });
+
+        $this->app->instance(SessionInterface::class, $session);
     }
 }

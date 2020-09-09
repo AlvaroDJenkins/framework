@@ -20,9 +20,6 @@ class HttpKernelTest extends TestCase
         $this->assertTrue($this->setAccessibleProperty($app, 'hasBeenBootstrapped'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testHandleRequests()
     {
         $app = $this->getApplication();
@@ -36,6 +33,44 @@ class HttpKernelTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('bar', $response->getContent());
         $this->assertTrue($app->isBooted());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testHandleRequestsWithMiddeware()
+    {
+        $app = $this->getApplication();
+        $router = $app->getRouter();
+        $router->get('foo/bar', '\Emberfuse\Tests\Routing\Stubs\MockController@index');
+        $kernel = new Kernel($app);
+        $response = $kernel->handle(Request::create('foo/bar', 'GET'), 1, false);
+
+        $this->assertCount(1, $router->getRouteCollection());
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals('bar', $response->getContent());
+        $this->assertTrue($app->isBooted());
+        $processedRequest = $app->make('request');
+        $this->assertTrue($processedRequest->hasSession());
+        $this->assertTrue($processedRequest->getSession()->isStarted());
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testPreviousUrlIsSavedInSessionData()
+    {
+        $app = $this->getApplication();
+        $router = $app->getRouter();
+        $router->get('foo/bar', '\Emberfuse\Tests\Routing\Stubs\MockController@index');
+        $kernel = new Kernel($app);
+        $response = $kernel->handle(
+            $request = Request::create('foo/bar', 'GET'),
+        );
+
+        $session = $app['request']->getSession();
+        $this->assertTrue($session->has('_previous.url'));
+        $this->assertEquals($request->getUri(), $session->get('_previous.url'));
     }
 
     /**
