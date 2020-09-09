@@ -34,7 +34,7 @@ trait RegisterLoggingService
     {
         $logger = new Logger(new MonologLogger('emberfuse'));
 
-        $logger->useFiles($app->basePath('logs/app.log'), 'debug');
+        $logger->useFiles($app->basePath('storage/logs/app.log'), 'debug');
 
         return $logger;
     }

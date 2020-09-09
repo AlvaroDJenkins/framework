@@ -73,6 +73,6 @@ class LoggerTest extends TestCase
 
         $app->getLogger()->info('Test log');
 
-        $this->assertTrue(file_exists(__DIR__ . '/fixtures/logs/app.log'));
+        $this->assertTrue(file_exists(__DIR__ . '/fixtures/storage/logs/app.log'));
     }
 }

@@ -20,12 +20,16 @@ class HttpKernelTest extends TestCase
         $this->assertTrue($this->setAccessibleProperty($app, 'hasBeenBootstrapped'));
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testHandleRequests()
     {
         $app = $this->getApplication();
         $router = $app->getRouter();
         $router->get('foo/bar', '\Emberfuse\Tests\Routing\Stubs\MockController@index');
         $kernel = new Kernel($app);
+        $kernel->shouldSkipMiddleware(true);
         $response = $kernel->handle(Request::create('foo/bar', 'GET'), 1, false);
 
         $this->assertCount(1, $router->getRouteCollection());

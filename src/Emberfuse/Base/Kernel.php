@@ -5,6 +5,7 @@ namespace Emberfuse\Base;
 use Throwable;
 use Emberfuse\Support\Pipeline;
 use Emberfuse\Base\Bootstrap\LoadServices;
+use Emberfuse\Base\Middleware\StartSession;
 use Symfony\Component\HttpFoundation\Request;
 use Emberfuse\Base\Bootstrap\LoadErrorHandler;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,11 +30,20 @@ class Kernel implements HttpKernelInterface
     ];
 
     /**
+     * Indicates whether middleware should be skipped.
+     *
+     * @var bool
+     */
+    protected $shouldSkipMiddleware = false;
+
+    /**
      * Application middleware stack.
      *
      * @var array
      */
-    protected $middleware = [];
+    protected $middleware = [
+        StartSession::class,
+    ];
 
     /**
      * Create new instance of HTTP Kernel.
@@ -102,7 +112,7 @@ class Kernel implements HttpKernelInterface
     {
         return (new Pipeline($this->app))
             ->send($request)
-            ->through($this->middleware)
+            ->through($this->shouldSkipMiddleware ? [] : $this->middleware)
             ->then(function ($request) {
                 return $this->app->getRouter()->dispatch($request);
             });
@@ -120,6 +130,18 @@ class Kernel implements HttpKernelInterface
         }
 
         $this->app->setHasBeenBootstrapped(true);
+    }
+
+    /**
+     * Determine if the request handling should skip middleware.
+     *
+     * @param bool $should
+     *
+     * @return void
+     */
+    public function shouldSkipMiddleware(bool $should = false): void
+    {
+        $this->shouldSkipMiddleware = $should;
     }
 
     /**

@@ -16,8 +16,24 @@ class LoadServices implements BootstrapperInterface
      */
     public function bootstrap(ApplicationInterface $app): void
     {
-        // foreach ($app['config']->get('services') as $service) {
-        //     $app->registerService($service);
-        // }
+        foreach ($this->getServices($app) as $service) {
+            $app->registerService($service);
+        }
+    }
+
+    /**
+     * Get all service registered to the application.
+     *
+     * @param \Emberfuse\Base\Contracts\ApplicationInterface
+     *
+     * @return array
+     */
+    protected function getServices(ApplicationInterface $app): array
+    {
+        if ($app['config']->has('services')) {
+            return array_merge($app->services(), $app['config']->get('services'));
+        }
+
+        return $app->services();
     }
 }
