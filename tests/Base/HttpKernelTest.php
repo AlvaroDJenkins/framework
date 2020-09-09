@@ -50,7 +50,7 @@ class HttpKernelTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('bar', $response->getContent());
         $this->assertTrue($app->isBooted());
-        $processedRequest = $app->make('request');
+        $processedRequest = $app->make(Request::class);
         $this->assertTrue($processedRequest->hasSession());
         $this->assertTrue($processedRequest->getSession()->isStarted());
     }
@@ -68,7 +68,7 @@ class HttpKernelTest extends TestCase
             $request = Request::create('foo/bar', 'GET'),
         );
 
-        $session = $app['request']->getSession();
+        $session = $app[Request::class]->getSession();
         $this->assertTrue($session->has('_previous.url'));
         $this->assertEquals($request->getUri(), $session->get('_previous.url'));
     }

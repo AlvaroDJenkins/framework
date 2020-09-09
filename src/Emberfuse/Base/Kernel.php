@@ -96,7 +96,7 @@ class Kernel implements HttpKernelInterface
 
         $request->enableHttpMethodParameterOverride();
 
-        $this->app->instance('request', $request);
+        $this->app->instance(Request::class, $request);
 
         return $request;
     }
