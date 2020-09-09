@@ -2,10 +2,10 @@
 
 namespace Emberfuse\Base;
 
-use BadMethodCallException;
 use Psr\Log\LoggerInterface;
 use Emberfuse\Routing\Router;
 use Emberfuse\Container\Container;
+use Emberfuse\Session\SessionService;
 use Emberfuse\Base\Contracts\ServiceInterface;
 use Emberfuse\Routing\Contracts\RouterInterface;
 use Emberfuse\Base\Contracts\ApplicationInterface;
@@ -31,7 +31,7 @@ class Application extends Container implements ApplicationInterface
         'app',
         'database',
         'public',
-        'logs',
+        'storage',
         'views',
     ];
 
@@ -68,7 +68,16 @@ class Application extends Container implements ApplicationInterface
      *
      * @var array
      */
-    protected $services = [];
+    protected $services = [
+        SessionService::class,
+    ];
+
+    /**
+     * Array of all registered service classes.
+     *
+     * @var array
+     */
+    protected $loadedServices = [];
 
     /**
      * Create new instance of Emberfuse application.
@@ -149,6 +158,8 @@ class Application extends Container implements ApplicationInterface
 
         $this->instance(self::class, $this);
 
+        $this->instance(ApplicationInterface::class, $this);
+
         return $this;
     }
 
@@ -201,8 +212,8 @@ class Application extends Container implements ApplicationInterface
             return;
         }
 
-        array_walk($this->services, function ($service) {
-            $this->bootServices($service);
+        array_walk($this->loadedServices, function ($service) {
+            $this->bootService($service);
         });
 
         $this->booted = true;
@@ -217,13 +228,11 @@ class Application extends Container implements ApplicationInterface
      *
      * @throws \BadMethodCallException
      */
-    protected function bootServices(ServiceInterface $service): void
+    protected function bootService(ServiceInterface $service): void
     {
         if (method_exists($service, 'boot')) {
             call_user_func([$service, 'boot']);
         }
-
-        throw new BadMethodCallException();
     }
 
     /**
@@ -257,8 +266,20 @@ class Application extends Container implements ApplicationInterface
      */
     public function registerService(string $service): void
     {
-        if (!array_key_exists($service, $this->services)) {
-            $this->services[$service] = $this->make($service);
+        if (array_key_exists($service, $this->loadedServices)) {
+            return;
+        }
+
+        $service = $this->make($service);
+
+        if (method_exists($service, 'register')) {
+            $service->register();
+        }
+
+        $this->loadedServices[get_class($service)] = $service;
+
+        if ($this->booted) {
+            $this->bootService($service);
         }
     }
 
@@ -316,5 +337,15 @@ class Application extends Container implements ApplicationInterface
     protected function configurations(string $key): array
     {
         return $this['config'];
+    }
+
+    /**
+     * Get all default application services.
+     *
+     * @return array
+     */
+    public function services(): array
+    {
+        return $this->services;
     }
 }
