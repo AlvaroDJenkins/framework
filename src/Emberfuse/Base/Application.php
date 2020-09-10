@@ -183,7 +183,7 @@ class Application extends Container implements ApplicationInterface
     public function registerExceptionHandler(): ApplicationInterface
     {
         $this->singleton(ExceptionHandlerInterface::class, function ($app) {
-            return new ExceptionHandler($app(LoggerInterface::class));
+            return new ExceptionHandler($app[LoggerInterface::class]);
         });
 
         return $this;
