@@ -1,6 +1,5 @@
 # Emberfuse PHP Framework
-
-Emberfuse is a PHP micro-framework that helps you quickly write simple yet powerful web applications and APIs.
+Emberfuse is a simple PHP micro framework, inspired by Laravel and Slim. We are not going to compete with with eirther frameworks but simply trying to learn from them by trying to build out their components on our own.
 
 ## Installation
 
