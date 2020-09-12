@@ -6,11 +6,11 @@ use Emberfuse\Tests\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 class SessionTest extends TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testSessionStart()
     {
         $session = new Session();
@@ -19,9 +19,6 @@ class SessionTest extends TestCase
         $this->assertTrue($session->isStarted());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSetRequestSession()
     {
         $request = Request::create('/', 'GET');
@@ -34,9 +31,6 @@ class SessionTest extends TestCase
         $this->assertTrue($request->hasSession());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testSetSessionItems()
     {
         $request = Request::create('/', 'GET');
