@@ -7,7 +7,7 @@ Emberfuse is a PHP micro-framework that helps you quickly write simple yet power
 It's recommended that you use [Composer](https://getcomposer.org/) to install Emberfuse.
 
 ```bash
-$ composer require emberfuse/emberfuse:^1.2
+$ composer create-project emberfuse/emberfuse blog
 ```
 
 ```php
@@ -55,4 +55,3 @@ If you discover security related issues, please email security@emberfuse.io inst
 ## License
 
 The Emberfuse Framework is licensed under the MIT license. See [License File](LICENSE.md) for more information.
-
