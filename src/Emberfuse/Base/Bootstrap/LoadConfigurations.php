@@ -19,9 +19,7 @@ class LoadConfigurations implements BootstrapperInterface
      */
     public function bootstrap(ApplicationInterface $app): void
     {
-        $items = [];
-
-        $app->instance('config', $config = new Repository($items));
+        $app->instance('config', $config = new Repository([]));
 
         $this->loadConfigurationFile($app, $config);
 
