@@ -27,7 +27,7 @@ class ExceptionHandlerTest extends TestCase
 
     public function testExceptionRendering()
     {
-        putenv('APP_DEBUG=true');
+        putenv('APP_DEBUG=' . true);
         $request = Mockery::mock(Request::class);
         $logger = Mockery::mock(LoggerInterface::class);
         $handler = new ExceptionHandler($logger);
@@ -40,7 +40,7 @@ class ExceptionHandlerTest extends TestCase
 
     public function testHttpExceptionRendering()
     {
-        putenv('APP_DEBUG=true');
+        putenv('APP_DEBUG=' . true);
         $request = Mockery::mock(Request::class);
         $logger = Mockery::mock(LoggerInterface::class);
         $handler = new ExceptionHandler($logger);

@@ -8,9 +8,8 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Emberfuse\Base\Contracts\ExceptionHandlerInterface;
-use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 
 class ExceptionHandler implements ExceptionHandlerInterface
 {
@@ -55,7 +54,7 @@ class ExceptionHandler implements ExceptionHandlerInterface
      */
     public function render(Request $request, Throwable $e): Response
     {
-        $content = $this->renderExceptionWithSymfony($e, getenv('APP_DEBUG'));
+        $content = $this->renderExceptionWithSymfony($e, (bool) getenv('APP_DEBUG'));
 
         $headers = $this->isHttpException($e) ? $e->getHeaders() : [];
         $statusCode = $this->isHttpException($e) ? $e->getStatusCode() : 500;
@@ -66,16 +65,16 @@ class ExceptionHandler implements ExceptionHandlerInterface
     /**
      * Render an exception to a string using Symfony.
      *
-     * @param \Exception $e
+     * @param \Throwable $e
      * @param bool       $debug
      *
      * @return string
      */
-    protected function renderExceptionWithSymfony(Exception $e, $debug)
+    protected function renderExceptionWithSymfony(Throwable $e, $debug)
     {
-        return (new SymfonyExceptionHandler($debug))->getHtml(
-            FlattenException::create($e)
-        );
+        $renderer = new HtmlErrorRenderer($debug);
+
+        return $renderer->render($e)->getAsString();
     }
 
     /**
