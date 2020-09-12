@@ -196,7 +196,10 @@ class Application extends Container implements ApplicationInterface
      */
     public function registerRouter(): ApplicationInterface
     {
-        $this->instance(RouterInterface::class, $this->router = new Router($this));
+        $this->instance(
+            RouterInterface::class,
+            $this->router = new Router($this)
+        );
 
         return $this;
     }
