@@ -112,8 +112,8 @@ class Kernel implements HttpKernelInterface
     {
         return (new Pipeline($this->app))
             ->send($request)
-            ->through($this->shouldSkipMiddleware ? [] : $this->middleware)
-            ->then(function ($request) {
+            ->through($this->getMiddleware())
+            ->then(function (Request $request): Response {
                 return $this->app->getRouter()->dispatch($request);
             });
     }
@@ -130,6 +130,19 @@ class Kernel implements HttpKernelInterface
         }
 
         $this->app->setHasBeenBootstrapped(true);
+    }
+
+    /**
+     * Get all registered middleware.
+     *
+     * @return array
+     */
+    public function getMiddleware(): array
+    {
+        return $this->shouldSkipMiddleware ? [] : array_merge(
+            $this->app['config']->get('middleware'),
+            $this->middleware
+        );
     }
 
     /**

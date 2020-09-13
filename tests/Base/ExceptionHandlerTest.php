@@ -2,7 +2,7 @@
 
 namespace Emberfuse\Tests\Base;
 
-use Mockery;
+use Mockery as m;
 use RuntimeException;
 use Psr\Log\LoggerInterface;
 use Emberfuse\Tests\TestCase;
@@ -14,13 +14,13 @@ class ExceptionHandlerTest extends TestCase
 {
     public function tearDown(): void
     {
-        Mockery::close();
+        m::close();
     }
 
     public function testExceptionReporting()
     {
-        $logger = Mockery::mock(LoggerInterface::class);
-        $logger->shouldReceive('error')->withArgs(['Exception message', Mockery::hasKey('exception')]);
+        $logger = m::mock(LoggerInterface::class);
+        $logger->shouldReceive('error')->withArgs(['Exception message', m::hasKey('exception')]);
         $handler = new ExceptionHandler($logger);
         $handler->report(new RuntimeException('Exception message'));
     }
@@ -28,8 +28,8 @@ class ExceptionHandlerTest extends TestCase
     public function testExceptionRendering()
     {
         putenv('APP_DEBUG=' . true);
-        $request = Mockery::mock(Request::class);
-        $logger = Mockery::mock(LoggerInterface::class);
+        $request = m::mock(Request::class);
+        $logger = m::mock(LoggerInterface::class);
         $handler = new ExceptionHandler($logger);
 
         $response = $handler->render($request, new RuntimeException('Exception message'));
@@ -41,8 +41,8 @@ class ExceptionHandlerTest extends TestCase
     public function testHttpExceptionRendering()
     {
         putenv('APP_DEBUG=' . true);
-        $request = Mockery::mock(Request::class);
-        $logger = Mockery::mock(LoggerInterface::class);
+        $request = m::mock(Request::class);
+        $logger = m::mock(LoggerInterface::class);
         $handler = new ExceptionHandler($logger);
 
         $response = $handler->render($request, new HttpException(403, 'Http exception message'));

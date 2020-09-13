@@ -2,15 +2,22 @@
 
 namespace Emberfuse\Tests\Base;
 
+use Mockery as m;
 use Emberfuse\Base\Kernel;
 use Emberfuse\Tests\TestCase;
 use Emberfuse\Base\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Emberfuse\Tests\Base\Stubs\MiddlewareStub;
 use Symfony\Component\HttpFoundation\Response;
 use Emberfuse\Base\Contracts\ApplicationInterface;
 
 class HttpKernelTest extends TestCase
 {
+    public function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testBootstrapsApplication()
     {
         $app = $this->getApplication();
@@ -35,42 +42,14 @@ class HttpKernelTest extends TestCase
         $this->assertTrue($app->isBooted());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testHandleRequestsWithMiddeware()
+    public function testGetDefaultAndPostRegisteredMiddleware()
     {
         $app = $this->getApplication();
-        $router = $app->getRouter();
-        $router->get('foo/bar', '\Emberfuse\Tests\Routing\Stubs\MockController@index');
         $kernel = new Kernel($app);
-        $response = $kernel->handle(Request::create('foo/bar', 'GET'), 1, false);
+        $kernel->bootstrapApplication();
+        $app['config']->set('middleware', [MiddlewareStub::class]);
 
-        $this->assertCount(1, $router->getRouteCollection());
-        $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals('bar', $response->getContent());
-        $this->assertTrue($app->isBooted());
-        $processedRequest = $app->make(Request::class);
-        $this->assertTrue($processedRequest->hasSession());
-        $this->assertTrue($processedRequest->getSession()->isStarted());
-    }
-
-    /**
-     * @runInSeparateProcess
-     */
-    public function testPreviousUrlIsSavedInSessionData()
-    {
-        $app = $this->getApplication();
-        $router = $app->getRouter();
-        $router->get('foo/bar', '\Emberfuse\Tests\Routing\Stubs\MockController@index');
-        $kernel = new Kernel($app);
-        $response = $kernel->handle(
-            $request = Request::create('foo/bar', 'GET'),
-        );
-
-        $session = $app[Request::class]->getSession();
-        $this->assertTrue($session->has('_previous.url'));
-        $this->assertEquals($request->getUri(), $session->get('_previous.url'));
+        $this->assertCount(2, $kernel->getMiddleware());
     }
 
     /**
