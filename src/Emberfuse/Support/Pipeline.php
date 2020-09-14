@@ -121,7 +121,7 @@ class Pipeline implements PipelineInterface
                 return call_user_func_array([$pipe, $this->method], [$data]);
             }
 
-            throw new BadMethodCallException("{Method [$this->method] does not exist in class.}");
+            throw new BadMethodCallException("Method [{$this->method}] does not exist in class.");
         };
     }
 }
