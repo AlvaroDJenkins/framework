@@ -24,7 +24,7 @@ class PipelineTest extends TestCase
                 return $data;
             });
 
-        $this->assertNotEquals($data, $result);
+        $this->assertNotSame($data, $result);
     }
 
     public function testSendingThroughEmptyPipes()
@@ -41,6 +41,6 @@ class PipelineTest extends TestCase
                 return $data;
             });
 
-        $this->assertEquals($data, $result);
+        $this->assertSame($data, $result);
     }
 }
