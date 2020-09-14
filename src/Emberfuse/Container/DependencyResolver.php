@@ -2,6 +2,7 @@
 
 namespace Emberfuse\Container;
 
+use ReflectionNamedType;
 use ReflectionParameter;
 use Psr\Container\ContainerInterface;
 use Emberfuse\Container\Exceptions\DependencyResolutionException;
@@ -54,7 +55,7 @@ class DependencyResolver
                 continue;
             }
 
-            $resolution = is_null($dependency->getClass())
+            $resolution = is_null($this->getDependencyClassName($dependency))
                 ? $this->resolvePrimitive($dependency)
                 : $this->resolveClass($dependency);
 
@@ -62,6 +63,24 @@ class DependencyResolver
         }
 
         return $resolved;
+    }
+
+    /**
+     * Determine if the given dependency is of type primitive or a class.
+     *
+     * @param \ReflectionParameter $dependency
+     *
+     * @return string|null
+     */
+    protected function getDependencyClassName(ReflectionParameter $dependency): ?string
+    {
+        $type = $dependency->getType();
+
+        if (! $type instanceof ReflectionNamedType || $type->isBuiltin()) {
+            return null;
+        }
+
+        return $type->getName();
     }
 
     /**
@@ -94,7 +113,7 @@ class DependencyResolver
     protected function resolveClass(ReflectionParameter $parameter): object
     {
         try {
-            return $this->container->make($parameter->getClass()->name);
+            return $this->container->make($parameter->getType()->getName());
         } catch (DependencyResolutionException $e) {
             if ($parameter->isOptional()) {
                 return $parameter->getDefaultValue();

@@ -12,3 +12,40 @@
 [2020-09-09T19:56:47.116617+00:00] emberfuse.INFO: Test log  
 [2020-09-09T19:56:48.822019+00:00] emberfuse.INFO: Test log  
 [2020-09-09T19:57:19.111950+00:00] emberfuse.INFO: Test log  
+[2020-09-09T21:09:39.526500+00:00] emberfuse.INFO: Test log  
+[2020-09-09T21:33:31.918187+00:00] emberfuse.INFO: Test log  
+[2020-09-09T21:37:03.091488+00:00] emberfuse.INFO: Test log  
+[2020-09-09T21:48:50.031214+00:00] emberfuse.INFO: Test log  
+[2020-09-09T22:31:03.917340+00:00] emberfuse.INFO: Test log  
+[2020-09-09T22:31:33.810363+00:00] emberfuse.INFO: Test log  
+[2020-09-10T05:45:55.137261+00:00] emberfuse.INFO: Test log  
+[2020-09-10T05:52:43.764817+00:00] emberfuse.INFO: Test log  
+[2020-09-12T19:56:49.900854+00:00] emberfuse.ERROR: Failed to start the session because headers have already been sent by "/Users/thavarshan/Codebase/Valet/framework/vendor/phpunit/phpunit/src/Util/Printer.php" at line 104. {"exception":"[object] (RuntimeException(code: 0): Failed to start the session because headers have already been sent by \"/Users/thavarshan/Codebase/Valet/framework/vendor/phpunit/phpunit/src/Util/Printer.php\" at line 104. at /Users/thavarshan/Codebase/Valet/framework/vendor/symfony/http-foundation/Session/Storage/NativeSessionStorage.php:152)"} 
+[2020-09-12T19:56:49.921371+00:00] emberfuse.INFO: Test log  
+[2020-09-12T19:57:43.282130+00:00] emberfuse.INFO: Test log  
+[2020-09-12T20:03:39.317965+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:49:16.096374+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:49:49.879364+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:49:53.406833+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:50:55.529563+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:52:25.337155+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:52:26.495457+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:52:27.491679+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:53:17.525072+00:00] emberfuse.INFO: Test log  
+[2020-09-13T10:57:23.698856+00:00] emberfuse.INFO: Test log  
+[2020-09-13T11:10:02.179057+00:00] emberfuse.INFO: Test log  
+[2020-09-13T11:21:40.809734+00:00] emberfuse.INFO: Test log  
+[2020-09-13T11:54:56.902497+00:00] emberfuse.INFO: Test log  
+[2020-09-13T11:55:53.291307+00:00] emberfuse.INFO: Test log  
+[2020-09-14T09:02:33.803443+00:00] emberfuse.ERROR: [Parameter #0 [ <required> Emberfuse\Base\Contracts\ApplicationInterface $app ]] is unresolvable. {"exception":"[object] (Emberfuse\\Container\\Exceptions\\DependencyResolutionException(code: 0): [Parameter #0 [ <required> Emberfuse\\Base\\Contracts\\ApplicationInterface $app ]] is unresolvable. at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:99)"} 
+[2020-09-14T09:02:44.489442+00:00] emberfuse.ERROR: [Parameter #0 [ <required> Emberfuse\Base\Contracts\ApplicationInterface $app ]] is unresolvable. {"exception":"[object] (Emberfuse\\Container\\Exceptions\\DependencyResolutionException(code: 0): [Parameter #0 [ <required> Emberfuse\\Base\\Contracts\\ApplicationInterface $app ]] is unresolvable. at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:99)"} 
+[2020-09-14T09:02:59.854147+00:00] emberfuse.ERROR: [Parameter #0 [ <required> Emberfuse\Base\Contracts\ApplicationInterface $app ]] is unresolvable. {"exception":"[object] (Emberfuse\\Container\\Exceptions\\DependencyResolutionException(code: 0): [Parameter #0 [ <required> Emberfuse\\Base\\Contracts\\ApplicationInterface $app ]] is unresolvable. at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:99)"} 
+[2020-09-14T09:04:52.833557+00:00] emberfuse.ERROR: A function with return type must return a value (did you mean "return null;" instead of "return;"?) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): A function with return type must return a value (did you mean \"return null;\" instead of \"return;\"?) at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:78)"} 
+[2020-09-14T09:05:07.806676+00:00] emberfuse.ERROR: Call to undefined method Emberfuse\Container\DependencyResolver::dependencyIsPrimitive() {"exception":"[object] (Error(code: 0): Call to undefined method Emberfuse\\Container\\DependencyResolver::dependencyIsPrimitive() at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:58)"} 
+[2020-09-14T09:05:24.329456+00:00] emberfuse.ERROR: [Parameter #0 [ <required> Emberfuse\Base\Contracts\ApplicationInterface $app ]] is unresolvable. {"exception":"[object] (Emberfuse\\Container\\Exceptions\\DependencyResolutionException(code: 0): [Parameter #0 [ <required> Emberfuse\\Base\\Contracts\\ApplicationInterface $app ]] is unresolvable. at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:99)"} 
+[2020-09-14T09:07:02.693654+00:00] emberfuse.ERROR: [Parameter #0 [ <required> Emberfuse\Base\Contracts\ApplicationInterface $app ]] is unresolvable. {"exception":"[object] (Emberfuse\\Container\\Exceptions\\DependencyResolutionException(code: 0): [Parameter #0 [ <required> Emberfuse\\Base\\Contracts\\ApplicationInterface $app ]] is unresolvable. at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:101)"} 
+[2020-09-14T09:07:12.483183+00:00] emberfuse.ERROR: Return value of Emberfuse\Container\DependencyResolver::getDependencyClassName() must be of the type string or null, none returned {"exception":"[object] (TypeError(code: 0): Return value of Emberfuse\\Container\\DependencyResolver::getDependencyClassName() must be of the type string or null, none returned at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:84)"} 
+[2020-09-14T09:07:20.687936+00:00] emberfuse.INFO: Test log  
+[2020-09-14T09:07:23.622855+00:00] emberfuse.INFO: Test log  
+[2020-09-14T09:12:52.512800+00:00] emberfuse.ERROR: Undefined property: ReflectionNamedType::$name {"exception":"[object] (ErrorException(code: 0): Undefined property: ReflectionNamedType::$name at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:116)"} 
+[2020-09-14T09:13:07.362663+00:00] emberfuse.INFO: Test log  

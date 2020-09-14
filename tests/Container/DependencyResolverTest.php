@@ -10,6 +10,7 @@ use Emberfuse\Container\Container;
 use Emberfuse\Container\DependencyResolver;
 use Emberfuse\Tests\Container\Stubs\ContainerConcreteStub;
 use Emberfuse\Tests\Container\Stubs\ContainerDefaultValueStub;
+use Emberfuse\Tests\Container\Stubs\ContainerNestedDependentStub;
 
 class DependencyResolverTest extends TestCase
 {
@@ -49,6 +50,15 @@ class DependencyResolverTest extends TestCase
         $this->assertInstanceOf(stdClass::class, $parameters[0]);
         $this->assertInstanceOf(stdClass::class, $results[0]);
         $this->assertEquals('Thavarshan', $parameters[1]);
+    }
+
+    public function testReflectionGetTypeMethods()
+    {
+        // $reflector = new ReflectionClass(ContainerNestedDependentStub::class);
+        // $constructor = $reflector->getConstructor();
+        // $classDependency = $constructor->getParameters()[0];
+
+        // dd($classDependency->getType());
     }
 
     /**

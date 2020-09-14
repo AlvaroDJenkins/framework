@@ -5,6 +5,7 @@ namespace Emberfuse\Base\Bootstrap;
 use Throwable;
 use ErrorException;
 use Emberfuse\Base\ExceptionHandler;
+use Symfony\Component\HttpFoundation\Request;
 use Emberfuse\Base\Contracts\ApplicationInterface;
 use Emberfuse\Base\Contracts\BootstrapperInterface;
 use Symfony\Component\ErrorHandler\Error\FatalError;
@@ -54,7 +55,7 @@ class LoadErrorHandler implements BootstrapperInterface
      */
     public function handleShutdown(): void
     {
-        if (!is_null($error = error_get_last()) && $this->isFatal($error['type'])) {
+        if (! is_null($error = error_get_last()) && $this->isFatal($error['type'])) {
             $this->handleException($this->fatalErrorFromPhpError($error, 0));
         }
     }
@@ -97,7 +98,7 @@ class LoadErrorHandler implements BootstrapperInterface
 
         $handler->report($e);
 
-        $handler->render($this->app->make('request'), $e)->send();
+        $handler->render($this->app->make(Request::class), $e)->send();
     }
 
     /**

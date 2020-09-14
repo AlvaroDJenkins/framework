@@ -9,3 +9,5 @@ coverage.xml
 *.swo
 .DS_Store
 todo.md
+tests/Base/fixtures/storage/logs/app.log
+*.log

@@ -2,15 +2,22 @@
 
 namespace Emberfuse\Tests\Base;
 
+use Mockery as m;
 use Emberfuse\Base\Kernel;
 use Emberfuse\Tests\TestCase;
 use Emberfuse\Base\Application;
 use Symfony\Component\HttpFoundation\Request;
+use Emberfuse\Tests\Base\Stubs\MiddlewareStub;
 use Symfony\Component\HttpFoundation\Response;
 use Emberfuse\Base\Contracts\ApplicationInterface;
 
 class HttpKernelTest extends TestCase
 {
+    public function tearDown(): void
+    {
+        m::close();
+    }
+
     public function testBootstrapsApplication()
     {
         $app = $this->getApplication();
@@ -20,9 +27,6 @@ class HttpKernelTest extends TestCase
         $this->assertTrue($this->setAccessibleProperty($app, 'hasBeenBootstrapped'));
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testHandleRequests()
     {
         $app = $this->getApplication();
@@ -36,6 +40,16 @@ class HttpKernelTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('bar', $response->getContent());
         $this->assertTrue($app->isBooted());
+    }
+
+    public function testGetDefaultAndPostRegisteredMiddleware()
+    {
+        $app = $this->getApplication();
+        $kernel = new Kernel($app);
+        $kernel->bootstrapApplication();
+        $app['config']->set('middleware', [MiddlewareStub::class]);
+
+        $this->assertCount(2, $kernel->getMiddleware());
     }
 
     /**

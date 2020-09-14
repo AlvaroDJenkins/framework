@@ -183,7 +183,7 @@ class Application extends Container implements ApplicationInterface
     public function registerExceptionHandler(): ApplicationInterface
     {
         $this->singleton(ExceptionHandlerInterface::class, function ($app) {
-            return new ExceptionHandler($app(LoggerInterface::class));
+            return new ExceptionHandler($app[LoggerInterface::class]);
         });
 
         return $this;
@@ -196,7 +196,10 @@ class Application extends Container implements ApplicationInterface
      */
     public function registerRouter(): ApplicationInterface
     {
-        $this->instance(RouterInterface::class, $this->router = new Router($this));
+        $this->instance(
+            RouterInterface::class,
+            $this->router = new Router($this)
+        );
 
         return $this;
     }

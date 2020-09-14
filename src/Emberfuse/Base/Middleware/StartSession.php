@@ -40,6 +40,22 @@ class StartSession implements MiddlewareInterface
 
         $request->setSession($this->session);
 
+        $this->storeCurrentUrl($request);
+
         return $request;
+    }
+
+    /**
+     * Store the current URL for the request if necessary.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    protected function storeCurrentUrl(Request $request): void
+    {
+        if ($request->getMethod() === 'GET' && ! $request->isXmlHttpRequest()) {
+            $this->session->set('_previous.url', $request->getUri());
+        }
     }
 }

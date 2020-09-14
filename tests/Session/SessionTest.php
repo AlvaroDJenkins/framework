@@ -3,33 +3,22 @@
 namespace Emberfuse\Tests\Session;
 
 use Emberfuse\Tests\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class SessionTest extends TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testSessionStart()
     {
-        $session = new Session();
+        $session = $this->getSession();
         $session->start();
 
         $this->assertTrue($session->isStarted());
     }
 
-    /**
-     * @runInSeparateProcess
-     */
-    public function testSetRequestSession()
+    public function getSession(): SessionInterface
     {
-        $request = Request::create('/', 'GET');
-        $session = new Session();
-        $session->start();
-        $request->setSession($session);
-
-        $this->assertTrue($session->isStarted());
-        $this->assertTrue($request->hasSession());
+        return new Session(new MockArraySessionStorage());
     }
 }
