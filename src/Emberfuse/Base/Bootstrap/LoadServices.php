@@ -31,7 +31,7 @@ class LoadServices implements BootstrapperInterface
     protected function getServices(ApplicationInterface $app): array
     {
         if ($app['config']->has('services')) {
-            return array_merge($app->services(), $app['config']->get('services'));
+            return $app->services();
         }
 
         return $app->services();
