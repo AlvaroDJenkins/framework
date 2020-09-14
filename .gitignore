@@ -11,4 +11,3 @@ coverage.xml
 todo.md
 tests/Base/fixtures/storage/logs/app.log
 *.log
-tests/Base/fixtures/storage/logs/app.log
