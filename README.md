@@ -1,4 +1,4 @@
-# Emberfuse PHP Framework
+# Emberfuse PHP Framework (Project is still a work in progress)
 Emberfuse is a simple PHP micro framework, inspired by Laravel and Slim. We are not going to compete with either frameworks but simply trying to learn from them by trying to build out their components on our own.
 
 ## Installation
