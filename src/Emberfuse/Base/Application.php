@@ -334,12 +334,13 @@ class Application extends Container implements ApplicationInterface
      * Get application configurations repository.
      *
      * @param string $key
+     * @param mixed  $default
      *
      * @return array
      */
-    protected function configurations(string $key): array
+    protected function configurations(string $key, $default = null): array
     {
-        return $this['config'];
+        return $this['config']->get($key, $default);
     }
 
     /**
@@ -349,6 +350,6 @@ class Application extends Container implements ApplicationInterface
      */
     public function services(): array
     {
-        return $this->services;
+        return array_merge($this->services, $this['config']->get('services', []));
     }
 }
