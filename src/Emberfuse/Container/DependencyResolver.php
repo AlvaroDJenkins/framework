@@ -113,7 +113,7 @@ class DependencyResolver
     protected function resolveClass(ReflectionParameter $parameter): object
     {
         try {
-            return $this->container->make($parameter->getClass()->name);
+            return $this->container->make($parameter->getType()->getName());
         } catch (DependencyResolutionException $e) {
             if ($parameter->isOptional()) {
                 return $parameter->getDefaultValue();

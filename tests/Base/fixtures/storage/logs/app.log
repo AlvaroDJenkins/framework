@@ -47,3 +47,5 @@
 [2020-09-14T09:07:12.483183+00:00] emberfuse.ERROR: Return value of Emberfuse\Container\DependencyResolver::getDependencyClassName() must be of the type string or null, none returned {"exception":"[object] (TypeError(code: 0): Return value of Emberfuse\\Container\\DependencyResolver::getDependencyClassName() must be of the type string or null, none returned at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:84)"} 
 [2020-09-14T09:07:20.687936+00:00] emberfuse.INFO: Test log  
 [2020-09-14T09:07:23.622855+00:00] emberfuse.INFO: Test log  
+[2020-09-14T09:12:52.512800+00:00] emberfuse.ERROR: Undefined property: ReflectionNamedType::$name {"exception":"[object] (ErrorException(code: 0): Undefined property: ReflectionNamedType::$name at /Users/thavarshan/Codebase/Valet/framework/src/Emberfuse/Container/DependencyResolver.php:116)"} 
+[2020-09-14T09:13:07.362663+00:00] emberfuse.INFO: Test log  
