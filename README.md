@@ -36,7 +36,7 @@ $ composer test
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Learn More
+## Learn More (Links do not work - placeholders)
 
 Learn more at these links:
 
