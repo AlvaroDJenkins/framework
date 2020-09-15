@@ -6,7 +6,7 @@ Emberfuse is a simple PHP micro framework, inspired by Laravel and Slim. We are 
 It's recommended that you use [Composer](https://getcomposer.org/) to install Emberfuse.
 
 ```bash
-$ composer create-project emberfuse/emberfuse blog
+$ composer create-project emberfuse/emberfuse blog --stability=dev
 ```
 
 ```php
