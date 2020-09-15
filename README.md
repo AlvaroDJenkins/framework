@@ -36,17 +36,6 @@ $ composer test
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Learn More (Links do not work - placeholders)
-
-Learn more at these links:
-
-- [Website](https://www.emberfuse.io)
-- [Documentation](https://www.emberfuse.io/docs)
-- [Slack](https://emberfuse.slack.com)
-- [Support Forum](https://discourse.emberfuse.io)
-- [Twitter](https://twitter.com/emberfuse)
-- [Resources](https://github.com/xssc/awesome-slim)
-
 ## Security
 
 If you discover security related issues, please email security@emberfuse.io instead of using the issue tracker.
