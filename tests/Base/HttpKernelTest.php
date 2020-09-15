@@ -9,6 +9,7 @@ use Emberfuse\Base\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Emberfuse\Tests\Base\Stubs\MiddlewareStub;
 use Symfony\Component\HttpFoundation\Response;
+use Emberfuse\Tests\Routing\Stubs\MockController;
 use Emberfuse\Base\Contracts\ApplicationInterface;
 
 class HttpKernelTest extends TestCase
@@ -31,7 +32,7 @@ class HttpKernelTest extends TestCase
     {
         $app = $this->getApplication();
         $router = $app->getRouter();
-        $router->get('foo/bar', '\Emberfuse\Tests\Routing\Stubs\MockController@index');
+        $router->get('foo/bar', [MockController::class, 'index']);
         $kernel = new Kernel($app);
         $kernel->shouldSkipMiddleware(true);
         $response = $kernel->handle(Request::create('foo/bar', 'GET'), 1, false);

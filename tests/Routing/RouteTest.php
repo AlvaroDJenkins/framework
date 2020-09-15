@@ -6,12 +6,13 @@ use Emberfuse\Routing\Route;
 use Emberfuse\Tests\TestCase;
 use Symfony\Component\Routing\CompiledRoute;
 use Symfony\Component\HttpFoundation\Request;
+use Emberfuse\Tests\Routing\Stubs\MockController;
 
 class RouteTest extends TestCase
 {
     public function testNormalizesGivenUri()
     {
-        $route = new Route('GET', '/foo/bar', 'FooController@bar');
+        $route = new Route('GET', '/foo/bar', [MockController::class, 'bar']);
 
         $this->assertEquals('foo/bar', $route->prefixUri('/foo/bar'));
         $this->assertEquals('foo/bar', $route->uri());
@@ -19,11 +20,11 @@ class RouteTest extends TestCase
 
     public function testParseRouteAction()
     {
-        $route = new Route('GET', 'foo/bar', 'FooController@bar');
+        $route = new Route('GET', 'foo/bar', [MockController::class, 'bar']);
 
         $this->assertEquals(
             [
-                'controller' => 'FooController',
+                'controller' => 'Emberfuse\Tests\Routing\Stubs\MockController',
                 'method' => 'bar',
             ],
             $route->getAction()
@@ -32,7 +33,7 @@ class RouteTest extends TestCase
 
     public function testCompileRoute()
     {
-        $route = new Route('GET', 'foo/bar', 'FooController@bar');
+        $route = new Route('GET', 'foo/bar', [MockController::class, 'bar']);
 
         $this->assertNull($route->getCompiled());
 
@@ -43,8 +44,8 @@ class RouteTest extends TestCase
 
     public function testMatchesRouteWithGivenRequest()
     {
-        $routeMain = new Route('GET', '/', 'FooController@bar');
-        $routeFooBar = new Route('GET', 'foo/bar', 'FooController@bar');
+        $routeMain = new Route('GET', '/', [MockController::class, 'bar']);
+        $routeFooBar = new Route('GET', 'foo/bar', [MockController::class, 'bar']);
 
         $this->assertTrue($routeMain->matches(Request::create('/', 'GET')));
         $this->assertTrue($routeFooBar->matches(Request::create('foo/bar', 'GET')));

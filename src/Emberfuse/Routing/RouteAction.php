@@ -9,17 +9,17 @@ class RouteAction
     /**
      * Parse route action string and separate into class and method.
      *
-     * @param string $action
+     * @param array $action
      *
      * @return array
      */
-    public static function parse(string $action): array
+    public static function parse(array $action): array
     {
-        if (strpos($action, '@') === false) {
+        if (count($action) <= 0) {
             throw new InvalidArgumentException('Route action is invalid.');
         }
 
-        [$controller, $method] = explode('@', $action);
+        [$controller, $method] = $action;
 
         return compact('controller', 'method');
     }

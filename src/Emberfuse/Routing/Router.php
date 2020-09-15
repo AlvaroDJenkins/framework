@@ -42,11 +42,11 @@ class Router implements RouterInterface
      * Register a new GET route with the router.
      *
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function get(string $uri, string $action): Route
+    public function get(string $uri, array $action): Route
     {
         return $this->addRoute('GET', $uri, $action);
     }
@@ -55,11 +55,11 @@ class Router implements RouterInterface
      * Register a new POST route with the router.
      *
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function post(string $uri, string $action): Route
+    public function post(string $uri, array $action): Route
     {
         return $this->addRoute('POST', $uri, $action);
     }
@@ -68,11 +68,11 @@ class Router implements RouterInterface
      * Register a new PUT route with the router.
      *
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function put(string $uri, string $action): Route
+    public function put(string $uri, array $action): Route
     {
         return $this->addRoute('PUT', $uri, $action);
     }
@@ -81,11 +81,11 @@ class Router implements RouterInterface
      * Register a new PATCH route with the router.
      *
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function patch(string $uri, string $action): Route
+    public function patch(string $uri, array $action): Route
     {
         return $this->addRoute('PATCH', $uri, $action);
     }
@@ -94,11 +94,11 @@ class Router implements RouterInterface
      * Register a new DELETE route with the router.
      *
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function delete(string $uri, string $action): Route
+    public function delete(string $uri, array $action): Route
     {
         return $this->addRoute('DELETE', $uri, $action);
     }
@@ -107,11 +107,11 @@ class Router implements RouterInterface
      * Register a new OPTIONS route with the router.
      *
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Symfony\Component\Routing\Route
      */
-    public function options(string $uri, string $action): Route
+    public function options(string $uri, array $action): Route
     {
         return $this->addRoute('OPTIONS', $uri, $action);
     }
@@ -121,11 +121,11 @@ class Router implements RouterInterface
      *
      * @param string $method
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Emberfuse\Routing\Route
      */
-    public function addRoute(string $method, string $uri, string $action): Route
+    public function addRoute(string $method, string $uri, array $action): Route
     {
         return $this->routes->add($this->createRoute($method, $uri, $action));
     }
@@ -135,11 +135,11 @@ class Router implements RouterInterface
      *
      * @param string $method
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return \Emberfuse\Routing\Route
      */
-    protected function createRoute(string $method, string $uri, string $action): Route
+    protected function createRoute(string $method, string $uri, array $action): Route
     {
         $route = new Route($method, $uri, $action);
 

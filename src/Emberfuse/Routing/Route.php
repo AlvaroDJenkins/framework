@@ -83,11 +83,11 @@ class Route
      *
      * @param string $method
      * @param string $uri
-     * @param string $action
+     * @param array  $action
      *
      * @return void
      */
-    public function __construct(string $method, string $uri, string $action)
+    public function __construct(string $method, string $uri, array $action)
     {
         $this->method = $method;
         $this->uri = $this->prefixUri($uri);
@@ -222,13 +222,13 @@ class Route
     }
 
     /**
-     * Parse given action string to controller and method.
+     * Parse given action array to controller and method.
      *
-     * @param string $action
+     * @param array $action
      *
      * @return array
      */
-    protected function parseAction(string $action): array
+    protected function parseAction(array $action): array
     {
         return RouteAction::parse($action);
     }

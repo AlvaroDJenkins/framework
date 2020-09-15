@@ -4,6 +4,7 @@ namespace Emberfuse\Tests\Routing;
 
 use Emberfuse\Tests\TestCase;
 use Emberfuse\Routing\RouteAction;
+use Emberfuse\Tests\Routing\Stubs\MockController;
 
 class RouteActionTest extends TestCase
 {
@@ -11,10 +12,10 @@ class RouteActionTest extends TestCase
     {
         $this->assertEquals(
             [
-                'controller' => 'FooController',
+                'controller' => 'Emberfuse\Tests\Routing\Stubs\MockController',
                 'method' => 'bar',
             ],
-            RouteAction::parse('FooController@bar')
+            RouteAction::parse([MockController::class, 'bar'])
         );
     }
 }

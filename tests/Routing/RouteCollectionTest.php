@@ -7,6 +7,7 @@ use Emberfuse\Routing\Route;
 use Emberfuse\Tests\TestCase;
 use Emberfuse\Routing\RouteCollection;
 use Symfony\Component\HttpFoundation\Request;
+use Emberfuse\Tests\Routing\Stubs\MockController;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class RouteCollectionTest extends TestCase
@@ -14,7 +15,7 @@ class RouteCollectionTest extends TestCase
     public function testAddGivenRouteToCollection()
     {
         $routeCollection = new RouteCollection();
-        $routeCollection->add(new Route('GET', 'foo', 'FooController@bar'));
+        $routeCollection->add(new Route('GET', 'foo', [MockController::class, 'bar']));
 
         $this->assertCount(1, $routeCollection);
         $this->assertCount(1, $routeCollection->getRoutes());
@@ -23,7 +24,7 @@ class RouteCollectionTest extends TestCase
     public function testMatchesGivenRequestWithRoutes()
     {
         $routeCollection = new RouteCollection();
-        $routeCollection->add($route = new Route('GET', 'foo', 'FooController@bar'));
+        $routeCollection->add($route = new Route('GET', 'foo', [MockController::class, 'bar']));
 
         $this->assertSame($route, $routeCollection->match(Request::create('foo', 'GET')));
     }
@@ -31,8 +32,8 @@ class RouteCollectionTest extends TestCase
     public function testThrowsNotFoundExceprtionIfNoMatchFound()
     {
         $routeCollection = new RouteCollection();
-        $nonRegisteredRoute = new Route('GET', 'fum', 'FumController@boo');
-        $routeCollection->add($route = new Route('GET', 'foo', 'FooController@bar'));
+        $nonRegisteredRoute = new Route('GET', 'fum', [MockController::class, 'foo']);
+        $routeCollection->add($route = new Route('GET', 'foo', [MockController::class, 'bar']));
 
         try {
             $routeCollection->match(Request::create('fum', 'GET'));
