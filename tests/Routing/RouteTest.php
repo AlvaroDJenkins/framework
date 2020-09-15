@@ -50,4 +50,17 @@ class RouteTest extends TestCase
         $this->assertTrue($routeMain->matches(Request::create('/', 'GET')));
         $this->assertTrue($routeFooBar->matches(Request::create('foo/bar', 'GET')));
     }
+
+    public function testRouteNaming()
+    {
+        $route = new Route('GET', '/foo/bar', [MockController::class, 'bar']);
+        $route->name('mock-route');
+
+        $this->assertEquals('foo/bar', $route->prefixUri('/foo/bar'));
+        $this->assertEquals('foo/bar', $route->uri());
+        $this->assertEquals('mock-route', $route->getName());
+        $this->assertTrue($route->isNamed());
+        $this->assertTrue($route->isNamed('mock-route'));
+        $this->assertFalse($route->isNamed('nonmock-route'));
+    }
 }

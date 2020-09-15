@@ -40,6 +40,27 @@ class Route
     protected $action;
 
     /**
+     * Name of the route.
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * The parameter names for the route.
+     *
+     * @var array|null
+     */
+    protected $parameterNames = [];
+
+    /**
+     * The parameters for the route.
+     *
+     * @var array|null
+     */
+    protected $parameters = [];
+
+    /**
      * The regular expression requirements.
      *
      * @var array
@@ -164,6 +185,10 @@ class Route
      */
     public function bind(Request $request): Route
     {
+        if (is_null($this->compiled)) {
+            $this->compile();
+        }
+
         $this->bindParameters($request);
 
         return $this;
@@ -210,6 +235,28 @@ class Route
     }
 
     /**
+     * Set parameter requirements of route.
+     *
+     * @param array $parameterNames
+     *
+     * @return void
+     */
+    public function setParameterNames(array $parameterNames = []): void
+    {
+        $this->parameterNames = $parameterNames;
+    }
+
+    /**
+     * Get the named parameter requirements of the route.
+     *
+     * @return array
+     */
+    public function getParameterNames(): array
+    {
+        return $this->parameterNames;
+    }
+
+    /**
      * Prefix the given URI with the last prefix.
      *
      * @param string $uri
@@ -231,6 +278,18 @@ class Route
     protected function parseAction(array $action): array
     {
         return RouteAction::parse($action);
+    }
+
+    /**
+     * Set the name of the given route.
+     *
+     * @param string|null $routeName
+     *
+     * @return void
+     */
+    public function name(?string $routeName = null): void
+    {
+        $this->name = $routeName;
     }
 
     /**
@@ -271,6 +330,32 @@ class Route
     public function getAction(): array
     {
         return $this->action;
+    }
+
+    /**
+     * Get route's name if any.
+     *
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Deterine if the route is named the given name.
+     *
+     * @param string|null $name
+     *
+     * @return bool
+     */
+    public function isNamed(?string $name = null): bool
+    {
+        if (! is_null($name)) {
+            return $this->name === $name;
+        }
+
+        return ! is_null($this->name);
     }
 
     /**

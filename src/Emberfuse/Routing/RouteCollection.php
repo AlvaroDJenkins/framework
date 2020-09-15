@@ -26,6 +26,13 @@ class RouteCollection implements RouteCollectionInterface, Countable, IteratorAg
     protected $allRoutes;
 
     /**
+     * A look-up table of routes by their names.
+     *
+     * @var \Emberfuse\Routing\Route
+     */
+    protected $nameList = [];
+
+    /**
      * Add given route to collections.
      *
      * @param \Emberfuse\Routing\Route $route
@@ -50,7 +57,23 @@ class RouteCollection implements RouteCollectionInterface, Countable, IteratorAg
     {
         $this->routes[$route->method()][$route->uri()] = $route;
 
+        if ($route->isNamed()) {
+            $this->addToLookup($route);
+        }
+
         $this->allRoutes[$route->method() . $route->uri()] = $route;
+    }
+
+    /**
+     * Add the route to any look-up tables if necessary.
+     *
+     * @param \Emberfuse\Routing $route
+     *
+     * @return void
+     */
+    protected function addToLookup(Route $route): void
+    {
+        $this->nameList[$route->getName()] = $route;
     }
 
     /**
@@ -71,6 +94,25 @@ class RouteCollection implements RouteCollectionInterface, Countable, IteratorAg
         }
 
         throw new RouteNotFoundException();
+    }
+
+    /**
+     * Find the route matching a given name.
+     *
+     * @param string                                    $name
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Emberfse\Routing\Route
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function matchRouteByName(string $name, Request $request): Route
+    {
+        if (array_key_exists($name, $this->nameList)) {
+            return $this->nameList[$name]->bind($request);
+        }
+
+        throw new RouteNotFoundException("Route with anme [$name] was not found.");
     }
 
     /**

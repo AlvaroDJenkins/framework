@@ -7,18 +7,18 @@ use Symfony\Component\HttpFoundation\Request;
 class RouteParameters
 {
     /**
-     * The parameter names for the route.
-     *
-     * @var array|null
-     */
-    protected $parameterNames;
-
-    /**
      * Instance of Emberfuse route.
      *
      * @var \Emberfuse\Routing\Route
      */
     protected $route;
+
+    /**
+     * The parameter names for the route.
+     *
+     * @var array|null
+     */
+    protected $parameterNames;
 
     /**
      * Create new instance of route parameter binder.
@@ -84,6 +84,8 @@ class RouteParameters
         $this->parameterNames = array_map(function ($m) {
             return trim($m, '?');
         }, $matches[1]);
+
+        $this->route->setParameterNames($this->parameterNames);
     }
 
     /**
