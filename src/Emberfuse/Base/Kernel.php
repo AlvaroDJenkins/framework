@@ -140,7 +140,7 @@ class Kernel implements HttpKernelInterface
     public function getMiddleware(): array
     {
         return $this->shouldSkipMiddleware ? [] : array_merge(
-            $this->app['config']->get('middleware'),
+            $this->app['config']->get('middleware', []),
             $this->middleware
         );
     }

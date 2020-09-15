@@ -3,6 +3,7 @@
 namespace Emberfuse\Support;
 
 use Closure;
+use BadMethodCallException;
 use Psr\Container\ContainerInterface;
 use Emberfuse\Support\Contracts\PipelineInterface;
 
@@ -99,23 +100,28 @@ class Pipeline implements PipelineInterface
      */
     public function then(Closure $callback)
     {
-        return call_user_func_array($callback, [$this->process()]);
+        $package = array_reduce($this->pipes, $this->carry(), $this->package);
+
+        return call_user_func_array($callback, [$package]);
     }
 
     /**
-     * Perform the package sending process.
+     * Get a closure that represents a part of the layers of the application.
      *
-     * @return mixed
+     * @return \Closure
+     *
+     * @throws \BadMethodCallException
      */
-    protected function process()
+    protected function carry(): Closure
     {
-        foreach ($this->pipes as $pipe) {
-            $this->package = call_user_func_array(
-                [$this->container->make($pipe), $this->method],
-                [$this->package]
-            );
-        }
+        return function ($data, $pipe) {
+            $pipe = $this->container->make($pipe);
 
-        return $this->package;
+            if (method_exists($pipe, $this->method)) {
+                return call_user_func_array([$pipe, $this->method], [$data]);
+            }
+
+            throw new BadMethodCallException("Method [{$this->method}] does not exist in class.");
+        };
     }
 }

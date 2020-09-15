@@ -15,6 +15,6 @@ class ServiceClassStub extends AbstractService implements ServiceInterface
      */
     public function register(): void
     {
-        $this->app->instance('stdService', stdClass::class);
+        $this->app->instance('stdService', new stdClass());
     }
 }

@@ -80,11 +80,11 @@ class ExceptionHandler implements ExceptionHandlerInterface
     /**
      * Determine if the given exception is an HTTP exception.
      *
-     * @param \Exception $e
+     * @param \Throwable $e
      *
      * @return bool
      */
-    protected function isHttpException(Exception $e)
+    protected function isHttpException(Throwable $e)
     {
         return $e instanceof HttpException;
     }
