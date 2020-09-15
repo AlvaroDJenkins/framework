@@ -3,11 +3,14 @@
 namespace Emberfuse\Routing;
 
 use Closure;
+use ArrayObject;
+use JsonSerializable;
 use Emberfuse\Container\Container;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Emberfuse\Routing\Contracts\RouterInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Emberfuse\Routing\Contracts\RouteCollectionInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -201,10 +204,12 @@ class Router implements RouterInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function prepareResponse($request, $response): Response
+    protected function prepareResponse(Request $request, $response): Response
     {
-        if (! $response instanceof Response) {
-            $response = new Response($response);
+        if ($this->isSerializable($response)) {
+            $response = new JsonResponse($response);
+        } elseif (! $response instanceof Response) {
+            $response = new Response($response, 200, ['Content-Type' => 'text/html']);
         }
 
         if ($response->getStatusCode() === Response::HTTP_NOT_MODIFIED) {
@@ -212,6 +217,20 @@ class Router implements RouterInterface
         }
 
         return $response->prepare($request);
+    }
+
+    /**
+     * Determine if the route response is array type.
+     *
+     * @param mixed $response
+     *
+     * @return bool
+     */
+    protected function isSerializable($response): bool
+    {
+        return $response instanceof ArrayObject ||
+            $response instanceof JsonSerializable ||
+            is_array($response);
     }
 
     /**
