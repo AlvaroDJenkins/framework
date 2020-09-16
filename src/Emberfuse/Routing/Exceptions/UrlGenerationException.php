@@ -1,6 +1,6 @@
 <?php
 
-namespace Emberfuse\Routing;
+namespace Emberfuse\Routing\Exceptions;
 
 use Exception;
 
@@ -11,9 +11,9 @@ class UrlGenerationException extends Exception
      *
      * @param \Illuminate\Routing\Route $route
      *
-     * @return static
+     * @return \Emberfuse\Routing\Exceptions\UrlGenerationException
      */
-    public static function forMissingParameters($route)
+    public static function forMissingParameters($route): UrlGenerationException
     {
         return new static("Missing required parameters for [Route: {$route->getName()}] [URI: {$route->uri()}].");
     }

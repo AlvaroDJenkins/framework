@@ -4,6 +4,7 @@ namespace Emberfuse\Routing;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
+use Emberfuse\Routing\Exceptions\UrlGenerationException;
 use Emberfuse\Routing\Contracts\RouteCollectionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -60,6 +61,8 @@ class UrlGenerator implements UrlGeneratorInterface
      * @param \Emberfuse\Routing\Contracts\RouteCollectionInterface $routes
      * @param \Symfony\Component\HttpFoundation\Request             $request
      * @param \Symfony\Component\Routing\RequestContext|null        $context
+     *
+     * @return void
      */
     public function __construct(RouteCollectionInterface $routes, Request $request, ?RequestContext $context = null)
     {
