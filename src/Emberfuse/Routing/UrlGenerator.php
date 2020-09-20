@@ -4,7 +4,6 @@ namespace Emberfuse\Routing;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use Emberfuse\Routing\Exceptions\UrlGenerationException;
 use Emberfuse\Routing\Contracts\RouteCollectionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -102,63 +101,6 @@ class UrlGenerator implements UrlGeneratorInterface
         } catch (RouteNotFoundException $e) {
             throw new NotFoundHttpException($e->getMessage());
         }
-
-        $uri = $this->constructPath(
-            $route->uri,
-            $this->replaceRouteParameters($route, $parameters)
-        );
-
-        $uri = strtr(rawurlencode($uri), $this->dontEncode);
-
-        if ($referenceType !== UrlGeneratorInterface::ABSOLUTE_PATH) {
-            $uri = preg_replace('#^(//|[^/?])+#', '', $uri);
-
-            if ($base = $this->request->getBaseUrl()) {
-                $uri = preg_replace('#^' . $base . '#i', '', $uri);
-            }
-        }
-
-        return '/' . ltrim($uri, '/');
-    }
-
-    /**
-     * Replace route parameter placeholders with actual values.
-     *
-     * @param \Emberfuse\Routing\Route $route
-     * @param array                    $parameters
-     *
-     * @return array
-     */
-    protected function replaceRouteParameters(Route $route, array $parameters = []): array
-    {
-        $routeParameters = array_flip($route->getParameterNames());
-
-        foreach ($parameters as $name => $value) {
-            if (! array_key_exists($name, $routeParameters)) {
-                throw UrlGenerationException::forMissingParameters($route);
-            }
-
-            $routeParameters[$name] = $value;
-        }
-
-        return $routeParameters;
-    }
-
-    /**
-     * Construct path section of the uri.
-     *
-     * @param string $uri
-     * @param array  $parameters
-     *
-     * @return string
-     */
-    protected function constructPath(string $uri, array $parameters): string
-    {
-        foreach ($parameters as $key => $value) {
-            $uri = preg_replace("/\{($key*?)\}/", $value, $uri);
-        }
-
-        return $uri;
     }
 
     /**
